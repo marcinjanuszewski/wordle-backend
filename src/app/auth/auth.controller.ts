@@ -19,6 +19,7 @@ import JwtAuth from './decorators/jwt-auth.decorator';
 
 import { SchemaValidationPipe } from '../../common/pipe/schema-validation.pipe';
 import User from '../user/types/user';
+import { ErrorResponseDto } from '../../common/dtos/error-response.dto';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -27,7 +28,7 @@ export class AuthController {
 
   @Post('/sign-in')
   @ApiResponse({ status: 200, type: AuthTokensDto })
-  @ApiResponse({ status: 400 })
+  @ApiResponse({ status: 400, type: ErrorResponseDto })
   @ApiOperation({ summary: 'Login user' })
   @HttpCode(HttpStatus.OK)
   signIn(
@@ -38,7 +39,7 @@ export class AuthController {
 
   @Post('/sign-up')
   @ApiResponse({ status: 200, type: AuthTokensDto })
-  @ApiResponse({ status: 404 })
+  @ApiResponse({ status: 404, type: ErrorResponseDto })
   @ApiOperation({ summary: 'Register user' })
   @HttpCode(HttpStatus.OK)
   signUp(
@@ -49,7 +50,7 @@ export class AuthController {
 
   @Get('/me')
   @ApiResponse({ status: 200, type: AuthTokensDto })
-  @ApiResponse({ status: 401 })
+  @ApiResponse({ status: 401, type: ErrorResponseDto })
   @HttpCode(HttpStatus.OK)
   @UseGuards(JwtAuthGuard)
   @JwtAuth()

@@ -15,6 +15,7 @@ import { GameDto } from './dtos/game.dto';
 
 import User from '../user/types/user';
 import { JwtAuthGuard } from '../auth/guards/jwt.guard';
+import { ErrorResponseDto } from '../../common/dtos/error-response.dto';
 
 @ApiTags('game')
 @Controller('game')
@@ -23,8 +24,8 @@ export class GameController {
 
   @Post('/')
   @ApiResponse({ status: 200, type: GameDto })
-  @ApiResponse({ status: 400 })
-  @ApiResponse({ status: 401 })
+  @ApiResponse({ status: 400, type: ErrorResponseDto })
+  @ApiResponse({ status: 401, type: ErrorResponseDto })
   @HttpCode(HttpStatus.OK)
   @UseGuards(JwtAuthGuard)
   @JwtAuth()
