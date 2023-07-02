@@ -1,0 +1,30 @@
+version: "3.8"
+services:
+  api:
+    build:
+      dockerfile: Dockerfile.local
+      context: .
+    volumes:
+      - .:/app
+    command: npm run start:debug
+    env_file:
+      - .env
+    ports:
+      - 3000:3000
+      - 9229:9229 # debugger port
+    networks:
+      - wordle
+
+  postgres:
+    image: postgres:15
+    environment: # TODO: replace envs
+      POSTGRES_DB: wordle_dev
+      POSTGRES_USERNAME: postgres
+      POSTGRES_PASSWORD: p4ssw0rd
+    ports:
+      - "5432:5432"
+    networks:
+      - wordle
+networks:
+  wordle:
+    driver: bridge
