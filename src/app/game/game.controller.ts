@@ -23,11 +23,12 @@ export class GameController {
 
   @Post('/')
   @ApiResponse({ status: 200, type: GameDto })
+  @ApiResponse({ status: 400 })
   @ApiResponse({ status: 401 })
   @HttpCode(HttpStatus.OK)
   @UseGuards(JwtAuthGuard)
   @JwtAuth()
-  startNewGame(@ContextUser() user: User): Promise<GameDto> {
+  public startNewGame(@ContextUser() user: User): Promise<GameDto> {
     return this.gameService.startGame(user.id);
   }
 }

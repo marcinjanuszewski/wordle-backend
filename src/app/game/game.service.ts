@@ -1,9 +1,11 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 
 import { GameDto } from './dtos/game.dto';
+import { GameStatus } from './types/game-status.enum';
 
 import GameRepository from '../../core/database/repositories/game.repository';
 import { DI_WORD_SERVICE, IWordService } from '../word/word.service';
+import { ErrorKeys } from '../../common/constant/error-keys.constant';
 
 export interface IGameService {
   startGame(userId: string): Promise<GameDto>;
@@ -17,7 +19,14 @@ export class GameService implements IGameService {
   ) {}
 
   async startGame(userId: string): Promise<GameDto> {
-    // todo: think about only 1 game running
+    const startedGamesCount = await this.gameRepository.countBy({
+      userId,
+      status: GameStatus.STARTED,
+    });
+
+    if (startedGamesCount) {
+      throw new BadRequestException(ErrorKeys.GAME.GAME_ALREADY_STARTED);
+    }
 
     const word = await this.wordService.generateRandomWord();
 
