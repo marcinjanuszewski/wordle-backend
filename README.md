@@ -80,3 +80,6 @@ If you want to create migration named as `user`, simply run this script:
 ```bash
 npm run db:migration:generate src/core/database/migrations/user
 ```
+
+## Swagger
+Application supports swagger. It's available on `/api` path (ex. `http://localhost:3000/api`)

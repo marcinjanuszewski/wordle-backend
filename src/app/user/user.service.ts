@@ -1,4 +1,5 @@
-import { IUserRepository } from '../../core/database/repositories/user.repository';
+import { Injectable } from '@nestjs/common';
+import UserRepository from '../../core/database/repositories/user.repository';
 import User from './types/user';
 
 export interface IUserService {
@@ -7,8 +8,9 @@ export interface IUserService {
   save(user: Partial<User>): Promise<User>;
 }
 
+@Injectable()
 export class UserService implements IUserService {
-  constructor(private readonly userRepository: IUserRepository) {}
+  constructor(private readonly userRepository: UserRepository) {}
 
   getById(id: string): Promise<User> {
     return this.userRepository.getById(id);

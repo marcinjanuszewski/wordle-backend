@@ -1,1 +1,3 @@
-export default [];
+import UserRepository from './user.repository';
+
+export default [UserRepository];

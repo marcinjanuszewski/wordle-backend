@@ -2,6 +2,9 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import defaultConfig from './config/default.config';
 import { Logger } from '@nestjs/common';
+import { setupSwagger } from './common/swagger/setup-swagger';
+import { AllExceptionFilter } from './common/filters/exception.filter';
+import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 
 process.on('uncaughtException', (err) => {
   // eslint-disable-next-line no-console
@@ -17,6 +20,11 @@ const appConfig = defaultConfig().application;
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  app.useGlobalFilters(new AllExceptionFilter());
+  app.useGlobalFilters(new HttpExceptionFilter());
+
+  setupSwagger(app);
 
   const port = +appConfig.port;
   await app.listen(port, '0.0.0.0');
