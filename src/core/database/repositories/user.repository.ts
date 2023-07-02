@@ -1,6 +1,7 @@
 import { Repository, EntityManager } from 'typeorm';
-import UserEntity from '../entities/user.entity';
 import { Injectable } from '@nestjs/common';
+
+import UserEntity from '../entities/user.entity';
 
 export interface IUserRepository extends Repository<UserEntity> {
   getById(id: string): Promise<UserEntity | null>;

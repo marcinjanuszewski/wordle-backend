@@ -1,9 +1,11 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
+import { JwtService } from '@nestjs/jwt';
+
 import { AuthTokensDto } from './dtos/auth-tokens.dto';
+
 import { UserService } from '../user/user.service';
 import User from '../user/types/user';
-import { JwtService } from '@nestjs/jwt';
 import { ErrorKeys } from '../../common/constant/error-keys.constant';
 
 export interface IAuthService {

@@ -1,4 +1,5 @@
 import { Entity, Column, Index } from 'typeorm';
+
 import BaseEntity from './base.entity';
 
 @Entity({ name: 'user' })

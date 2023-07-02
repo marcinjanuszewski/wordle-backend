@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import UserRepository from '../../core/database/repositories/user.repository';
+
 import User from './types/user';
+
+import UserRepository from '../../core/database/repositories/user.repository';
 
 export interface IUserService {
   getById(id: string): Promise<User | null>;

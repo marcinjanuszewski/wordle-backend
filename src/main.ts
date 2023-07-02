@@ -1,7 +1,8 @@
 import { NestFactory } from '@nestjs/core';
+import { Logger } from '@nestjs/common';
+
 import { AppModule } from './app.module';
 import defaultConfig from './config/default.config';
-import { Logger } from '@nestjs/common';
 import { setupSwagger } from './common/swagger/setup-swagger';
 import { AllExceptionFilter } from './common/filters/exception.filter';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';

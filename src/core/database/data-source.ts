@@ -1,5 +1,6 @@
 import { ConfigModule } from '@nestjs/config';
 import { DataSource } from 'typeorm';
+
 import dbConfig from './config/db.config';
 
 ConfigModule.forRoot({

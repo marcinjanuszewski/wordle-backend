@@ -1,17 +1,12 @@
-import {
-  Body,
-  Controller,
-  Get,
-  HttpCode,
-  HttpStatus,
-  Post,
-} from '@nestjs/common';
-import { AuthService } from './auth.service';
+import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+
+import { AuthService } from './auth.service';
 import { AuthTokensDto } from './dtos/auth-tokens.dto';
-import { SchemaValidationPipe } from '../../common/pipe/schema-validation.pipe';
 import { LoginDto, LoginDtoSchema } from './dtos/login.dto';
 import { RegisterDto, RegisterDtoSchema } from './dtos/register.dto';
+
+import { SchemaValidationPipe } from '../../common/pipe/schema-validation.pipe';
 
 @ApiTags('auth')
 @Controller('auth')

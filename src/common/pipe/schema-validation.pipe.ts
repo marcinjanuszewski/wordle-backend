@@ -1,5 +1,6 @@
 import { ArgumentMetadata, Injectable, PipeTransform } from '@nestjs/common';
 import Joi from 'joi';
+
 import { JoiException } from '../error/joi-exception';
 
 @Injectable()

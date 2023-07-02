@@ -1,7 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { DatabaseModule } from '../../src/core/database/database.module';
+
 import { createConfigModule } from './utils/config.util';
 import { clearDb, ensureDbMigrated } from './utils/db.helper';
+
+import { DatabaseModule } from '../../src/core/database/database.module';
 
 let moduleRef: TestingModule;
 
