@@ -11,6 +11,10 @@ import { ErrorKeys } from '../../common/constant/error-keys.constant';
 export interface IAuthService {
   login(email: string, password: string): Promise<AuthTokensDto>;
   register(email: string, password: string): Promise<AuthTokensDto>;
+  refreshToken(
+    accessToken: string,
+    refreshToken: string,
+  ): Promise<AuthTokensDto>;
 }
 
 @Injectable()
@@ -19,6 +23,12 @@ export class AuthService implements IAuthService {
     private readonly jwtService: JwtService,
     private readonly userService: UserService,
   ) {}
+  refreshToken(
+    _accessToken: string,
+    _refreshToken: string,
+  ): Promise<AuthTokensDto> {
+    throw new Error('Method not implemented.');
+  }
 
   async login(email: string, password: string): Promise<AuthTokensDto> {
     const user = await this.userService.getByEmail(email);
