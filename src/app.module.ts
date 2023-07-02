@@ -6,6 +6,7 @@ import { DatabaseModule } from './core/database/database.module';
 import dbConfig from './core/database/config/db.config';
 import { UserModule } from './app/user/user.module';
 import { AuthModule } from './app/auth/auth.module';
+import { GameModule } from './app/game/game.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { AuthModule } from './app/auth/auth.module';
     DatabaseModule,
     UserModule,
     AuthModule,
+    GameModule,
   ],
   controllers: [],
   providers: [ConfigModule],

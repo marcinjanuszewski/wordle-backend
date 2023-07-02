@@ -1,6 +1,9 @@
 {
   "moduleFileExtensions": ["js", "json", "ts"],
   "rootDir": ".",
+  "moduleNameMapper": {
+    "^@/(.*)$": "<rootDir>/../../src/$1"
+  },
   "testEnvironment": "node",
   "testMatch": ["**/integration/**/*.test.ts"],
   "transform": {

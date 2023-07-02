@@ -30,11 +30,6 @@ We will assess your solution based on the following criteria:
 - Testing: Are there appropriate tests to ensure the API's functionality?
 - Error handling: Does the API handle errors and edge cases effectively?
 
-## Submission:
-Please create a GitHub (GitLab or BitBucket) repository and share it with us, along with any necessary instructions for running the project locally.
-
-If you have any questions or need clarification, feel free to reach out to us.
-(https://github.com/nestjs/nest) framework TypeScript starter repository.
 
 ## Installation
 
@@ -82,4 +77,4 @@ npm run db:migration:generate src/core/database/migrations/user
 ```
 
 ## Swagger
-Application supports swagger. It's available on `/api` path (ex. `http://localhost:3000/api`)
+Application supports swagger. It's available on `/api` path (ex. `http://localhost:3000/api`)`
