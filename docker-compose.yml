@@ -21,6 +21,8 @@ services:
       POSTGRES_DB: wordle_dev
       POSTGRES_USERNAME: postgres
       POSTGRES_PASSWORD: p4ssw0rd
+    volumes:
+      - ./docker/postgres/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d:ro
     ports:
       - "5432:5432"
     networks:

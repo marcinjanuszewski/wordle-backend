@@ -69,4 +69,14 @@ $ npm run test:e2e
 
 # test coverage
 $ npm run test:cov
+
+# integration tests
+$ npm run test:integration
+```
+
+## Creating database migrations
+If you want to create migration named as `user`, simply run this script:
+
+```bash
+npm run db:migration:generate src/core/database/migrations/user
 ```
