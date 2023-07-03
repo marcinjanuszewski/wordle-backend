@@ -47,14 +47,15 @@ export class AuthService implements IAuthService {
 
     return this.createAuthTokens(user);
   }
-  async register(email: string, password: string): Promise<AuthTokensDto> {
-    const passwordHash = await bcrypt.hash(password, 10);
 
+  async register(email: string, password: string): Promise<AuthTokensDto> {
     const user = await this.userService.getByEmail(email);
 
     if (user) {
       throw new BadRequestException(ErrorKeys.AUTH.EMAIL_ALREADY_TAKEN);
     }
+
+    const passwordHash = await bcrypt.hash(password, 10);
 
     const newUser = await this.userService.save({
       email,

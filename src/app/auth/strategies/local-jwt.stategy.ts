@@ -18,7 +18,7 @@ export interface JwtPayload {
 @Injectable()
 export class LocalJwtStrategy extends PassportStrategy(Strategy) {
   constructor(
-    private readonly configService: ConfigService,
+    configService: ConfigService,
     private readonly userService: UserService,
   ) {
     const authConfig = configService.get<AuthConfig>('auth');

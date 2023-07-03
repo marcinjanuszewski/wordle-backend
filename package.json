@@ -18,7 +18,7 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "test:e2e": "jest --config ./test/e2e/jest-e2e.json --detectOpenHandles --forceExit",
     "test:integration": "DOTENV_CONFIG_PATH=.env.testing jest --runInBand --detectOpenHandles --forceExit --setupFiles dotenv/config --config ./test/integration/jest-integration.json",
     "typeorm": "./node_modules/.bin/typeorm-ts-node-commonjs -d ./src/core/database/data-source.ts",
     "db:migration:generate": "npm run typeorm migration:generate",

@@ -16,6 +16,7 @@ import { RegisterDto, RegisterDtoSchema } from './dtos/register.dto';
 import { JwtAuthGuard } from './guards/jwt.guard';
 import ContextUser from './decorators/context-user.decorator';
 import JwtAuth from './decorators/jwt-auth.decorator';
+import { UserDetailsDto } from './dtos/user-details.dto';
 
 import { SchemaValidationPipe } from '../../common/pipe/schema-validation.pipe';
 import User from '../user/types/user';
@@ -54,8 +55,8 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   @UseGuards(JwtAuthGuard)
   @JwtAuth()
-  me(@ContextUser() user: User): Promise<string> {
-    return Promise.resolve(user.email);
+  me(@ContextUser() user: User): Promise<UserDetailsDto> {
+    return Promise.resolve({ id: user.id, email: user.email });
   }
 
   // todo: implement refresh token logic

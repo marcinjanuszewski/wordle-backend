@@ -1,5 +1,5 @@
 import { NestFactory } from '@nestjs/core';
-import { Logger } from '@nestjs/common';
+import { INestApplication, Logger } from '@nestjs/common';
 
 import { AppModule } from './app.module';
 import defaultConfig from './config/default.config';
@@ -19,11 +19,16 @@ process.on('unhandledRejection', (reason, promise) => {
 
 const appConfig = defaultConfig().application;
 
+export const setupApp = (app: INestApplication) => {
+  return app
+    .useGlobalFilters(new AllExceptionFilter())
+    .useGlobalFilters(new HttpExceptionFilter());
+};
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  app.useGlobalFilters(new AllExceptionFilter());
-  app.useGlobalFilters(new HttpExceptionFilter());
+  setupApp(app);
 
   setupSwagger(app);
 
