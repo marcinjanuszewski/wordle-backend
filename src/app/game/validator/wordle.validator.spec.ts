@@ -1,4 +1,4 @@
-import wordleValidator from './wordle.validator';
+import WordleValidator from './wordle.validator';
 
 import { GameGuessResult } from '../types/game-guess-result.enum';
 
@@ -10,6 +10,12 @@ type WordleValidateTestCase = {
 };
 
 describe('wordle validator', () => {
+  let wordleValidator: WordleValidator;
+
+  beforeAll(() => {
+    wordleValidator = new WordleValidator();
+  });
+
   describe('validate', () => {
     const testCases: WordleValidateTestCase[] = [
       {
@@ -64,7 +70,7 @@ describe('wordle validator', () => {
         const result = wordleValidator.validate(word, guess);
 
         const indexes = result.map((value) => value.letterIndex);
-        expect(indexes).toEqual(indexes.sort());
+        expect(indexes).toEqual([...indexes].sort());
         expect(result.map((value) => value.letter)).toEqual([...guess]);
         expect(result.map((value) => value.result)).toEqual(expectedResult);
       });
