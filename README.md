@@ -33,6 +33,8 @@ We will assess your solution based on the following criteria:
 - Testing: Are there appropriate tests to ensure the API's functionality?
 - Error handling: Does the API handle errors and edge cases effectively?
 
+# Technicalities
+
 ## Installation
 
 ```bash
@@ -121,3 +123,13 @@ npm run db:migration:generate src/core/database/migrations/user
 ## Swagger
 
 Application supports swagger. It's available on `/api` path (ex. `http://localhost:3000/api`)`
+
+## Stack
+- typescript
+- nest.js
+- typeorm
+- postgres
+- joi
+- bcrypt
+- jwt and passport-jwt
+- supertest, jest
