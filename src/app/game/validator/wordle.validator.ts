@@ -8,28 +8,29 @@ export default class WordleValidator {
     }
 
     const matchMap = new Map();
-    const wordChars = word.split('');
+    const guessChars = guess.toLocaleLowerCase().split('');
+    const wordChars = word.toLocaleLowerCase().split('');
     const solutionTaken = wordChars.map(() => false);
 
-    for (let i = 0; i < guess.length; i++) {
-      if (guess[i] === word[i]) {
+    for (let i = 0; i < guessChars.length; i++) {
+      if (guessChars[i] === word[i]) {
         matchMap.set(i, GameGuessResult.MATCH);
         solutionTaken[i] = true;
       }
     }
 
-    for (let i = 0; i < guess.length; i++) {
+    for (let i = 0; i < guessChars.length; i++) {
       if (matchMap.has(i)) {
         continue;
       }
 
-      if (!wordChars.includes(guess[i])) {
+      if (!wordChars.includes(guessChars[i])) {
         matchMap.set(i, GameGuessResult.ABSENT);
         continue;
       }
 
       const presentCharIndex = wordChars.findIndex(
-        (x, index) => x === guess[i] && !solutionTaken[index],
+        (x, index) => x === guessChars[i] && !solutionTaken[index],
       );
 
       if (presentCharIndex >= 0) {
@@ -42,7 +43,7 @@ export default class WordleValidator {
 
     return [...matchMap.keys()].sort().map((guessCharIndex) => ({
       letterIndex: guessCharIndex,
-      letter: guess[guessCharIndex],
+      letter: guessChars[guessCharIndex],
       result: matchMap.get(guessCharIndex),
     }));
   }

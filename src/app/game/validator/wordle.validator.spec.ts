@@ -64,6 +64,18 @@ describe('wordle validator', () => {
           GameGuessResult.MATCH,
         ],
       },
+      {
+        word: 'pilot',
+        guess: 'PILOT',
+        expectedResult: [
+          GameGuessResult.MATCH,
+          GameGuessResult.MATCH,
+          GameGuessResult.MATCH,
+          GameGuessResult.MATCH,
+          GameGuessResult.MATCH,
+        ],
+        description: 'Should find matches even when it has different case',
+      },
     ];
     testCases.forEach(({ word, guess, expectedResult }) => {
       it(`should properly validate guess=${guess} for the word=${word}`, () => {
@@ -71,7 +83,9 @@ describe('wordle validator', () => {
 
         const indexes = result.map((value) => value.letterIndex);
         expect(indexes).toEqual([...indexes].sort());
-        expect(result.map((value) => value.letter)).toEqual([...guess]);
+        expect(result.map((value) => value.letter)).toEqual(
+          [...guess].map((e) => e.toLocaleLowerCase()),
+        );
         expect(result.map((value) => value.result)).toEqual(expectedResult);
       });
     });
