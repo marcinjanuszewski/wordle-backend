@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+
 import { GameStatus } from '../types/game-status.enum';
 
 export class GameDto {

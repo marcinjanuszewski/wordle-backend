@@ -1,7 +1,8 @@
-import { Entity, Column, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, Column, OneToMany, ManyToOne, JoinColumn } from 'typeorm';
 
 import BaseEntity from './base.entity';
 import UserEntity from './user.entity';
+import GameGuessEntity from './game-guess.entity';
 
 import { GameStatus } from '../../../app/game/types/game-status.enum';
 
@@ -19,4 +20,7 @@ export default class GameEntity extends BaseEntity {
   @ManyToOne(() => UserEntity, (m) => m.games)
   @JoinColumn({ name: 'userId', referencedColumnName: 'id' })
   public user?: UserEntity;
+
+  @OneToMany(() => GameGuessEntity, (m) => m.game)
+  public guesses?: GameGuessEntity;
 }

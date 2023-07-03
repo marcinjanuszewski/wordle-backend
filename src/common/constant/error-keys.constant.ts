@@ -5,5 +5,6 @@ export const ErrorKeys = {
   },
   GAME: {
     GAME_ALREADY_STARTED: 'GAME_ALREADY_STARTED',
+    GAME_ALREADY_FINISHED: 'GAME_ALREADY_FINISHED',
   },
 };
