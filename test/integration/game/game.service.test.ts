@@ -22,6 +22,7 @@ import { ErrorKeys } from '../../../src/common/constant/error-keys.constant';
 import { expectRejectedWith } from '../../utils/expect-rejected-with';
 import { Id } from '../../../src/common/util/id.util';
 import GameGuessRepository from '../../../src/core/database/repositories/game-guess.repository';
+import WordleValidator from '../../../src/app/game/validator/wordle.validator';
 
 describe('game', () => {
   let moduleRef: TestingModule;
@@ -93,13 +94,16 @@ describe('game', () => {
     });
 
     describe('guess', () => {
+      const prepareGame = (word: string, status: GameStatus) =>
+        gameRepository.save({
+          word,
+          userId: user.id,
+          status,
+        });
+
       it('should mark game as WON when guess properly matches', async () => {
         // given
-        const game = await gameRepository.save({
-          word: 'apple',
-          userId: user.id,
-          status: GameStatus.STARTED,
-        });
+        const game = await prepareGame('apple', GameStatus.STARTED);
 
         // when
         const guess = await gameService.guess(user.id, game.id, 'apple');
@@ -114,11 +118,7 @@ describe('game', () => {
 
       it('should mark game as LOST when guess does not match and is last attempt', async () => {
         // given
-        const game = await gameRepository.save({
-          word: 'apple',
-          userId: user.id,
-          status: GameStatus.STARTED,
-        });
+        const game = await prepareGame('apple', GameStatus.STARTED);
 
         await gameGuessRepository.save(
           Array.from({ length: MAX_GAME_GUESSES - 1 }, () => ({
@@ -147,11 +147,7 @@ describe('game', () => {
 
       it('should throw when game does not belong to user', async () => {
         // given
-        const game = await gameRepository.save({
-          word: 'apple',
-          userId: user.id,
-          status: GameStatus.LOST,
-        });
+        const game = await prepareGame('apple', GameStatus.LOST);
 
         // when&then
         await expectRejectedWith(
@@ -162,11 +158,7 @@ describe('game', () => {
 
       it('should throw when game is already finished', async () => {
         // given
-        const game = await gameRepository.save({
-          word: 'apple',
-          userId: user.id,
-          status: GameStatus.LOST,
-        });
+        const game = await prepareGame('apple', GameStatus.LOST);
 
         // when&then
         await expectRejectedWith(
@@ -176,6 +168,28 @@ describe('game', () => {
             expect(err.message).toEqual(ErrorKeys.GAME.GAME_ALREADY_FINISHED);
           },
         );
+      });
+
+      it('should rollback guess entity save when something fails', async () => {
+        // given
+        const game = await prepareGame('apple', GameStatus.STARTED);
+
+        const wordleValidator = moduleRef.get<WordleValidator>(WordleValidator);
+        wordleValidator.validate = jest.fn(() => {
+          throw new Error('something went wrong');
+        });
+
+        // when&then
+        await expectRejectedWith(
+          gameService.guess(user.id, game.id, 'apple'),
+          Error,
+          (err) => {
+            expect(err.message).toEqual('something went wrong');
+          },
+        );
+
+        const gameGuesses = await gameGuessRepository.findByGameId(game.id);
+        expect(gameGuesses).toHaveLength(0);
       });
     });
   });

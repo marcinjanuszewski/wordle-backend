@@ -79,26 +79,30 @@ export class GameService implements IGameService {
       throw new BadRequestException(ErrorKeys.GAME.GAME_ALREADY_FINISHED);
     }
 
-    const guesses = await this.gameGuessRepository.findByGameId(gameId);
+    return this.gameRepository.manager.transaction(async (manager) => {
+      const gameRepository = new GameRepository(manager);
+      const gameGuessRepository = new GameGuessRepository(manager);
+      const guesses = await gameGuessRepository.findByGameId(gameId);
 
-    const guessEntity = await this.gameGuessRepository.save({
-      guess: guess.toLocaleLowerCase(),
-      gameId,
+      const guessEntity = await gameGuessRepository.save({
+        guess: guess.toLocaleLowerCase(),
+        gameId,
+      });
+
+      const guessResult = this.wordleValidator.validate(game.word, guess);
+
+      if (guessResult.every((gr) => gr.result === GameGuessResult.MATCH)) {
+        await gameRepository.update(gameId, { status: GameStatus.WON });
+      } else if (guesses.length + 1 === MAX_GAME_GUESSES) {
+        await gameRepository.update(gameId, { status: GameStatus.LOST });
+      }
+
+      return {
+        id: guessEntity.id,
+        gameId,
+        guessNumber: guesses.length + 1,
+        guessResult,
+      };
     });
-
-    const guessResult = this.wordleValidator.validate(game.word, guess);
-
-    if (guessResult.every((gr) => gr.result === GameGuessResult.MATCH)) {
-      await this.gameRepository.update(gameId, { status: GameStatus.WON });
-    } else if (guesses.length + 1 === MAX_GAME_GUESSES) {
-      await this.gameRepository.update(gameId, { status: GameStatus.LOST });
-    }
-
-    return {
-      id: guessEntity.id,
-      gameId,
-      guessNumber: guesses.length + 1,
-      guessResult,
-    };
   }
 }
