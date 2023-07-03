@@ -84,6 +84,8 @@ export class GameService implements IGameService {
       const gameGuessRepository = new GameGuessRepository(manager);
       const guesses = await gameGuessRepository.findByGameId(gameId);
 
+      let isProperGuess = false;
+
       const guessEntity = await gameGuessRepository.save({
         guess: guess.toLocaleLowerCase(),
         gameId,
@@ -93,6 +95,7 @@ export class GameService implements IGameService {
 
       if (guessResult.every((gr) => gr.result === GameGuessResult.MATCH)) {
         await gameRepository.update(gameId, { status: GameStatus.WON });
+        isProperGuess = true;
       } else if (guesses.length + 1 === MAX_GAME_GUESSES) {
         await gameRepository.update(gameId, { status: GameStatus.LOST });
       }
@@ -102,6 +105,7 @@ export class GameService implements IGameService {
         gameId,
         guessNumber: guesses.length + 1,
         guessResult,
+        isProperGuess,
       };
     });
   }

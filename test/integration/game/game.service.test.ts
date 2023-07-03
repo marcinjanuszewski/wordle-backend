@@ -109,6 +109,8 @@ describe('game', () => {
         const guess = await gameService.guess(user.id, game.id, 'apple');
 
         // then
+        expect(guess.isProperGuess).toBe(true);
+
         const gameAfter = await gameRepository.getById(game.id);
         expect(gameAfter.status).toBe(GameStatus.WON);
 
@@ -131,6 +133,8 @@ describe('game', () => {
         const guess = await gameService.guess(user.id, game.id, 'pivot');
 
         // then
+        expect(guess.isProperGuess).toBe(false);
+
         const gameAfter = await gameRepository.getById(game.id);
         expect(gameAfter.status).toBe(GameStatus.LOST);
 

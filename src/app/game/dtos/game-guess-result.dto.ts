@@ -13,5 +13,8 @@ export class GameGuessResultDto {
   guessNumber: number;
 
   @ApiProperty()
+  isProperGuess: boolean;
+
+  @ApiProperty()
   guessResult: LetterGuessDto[];
 }

@@ -135,10 +135,11 @@ describe('GameController (e2e)', () => {
       // then
       expect(response.status).toBe(HttpStatus.OK);
 
-      const { gameId, guessNumber, guessResult } =
+      const { gameId, guessNumber, guessResult, isProperGuess } =
         response.body as GameGuessResultDto;
 
       expect(gameId).toBe(game.id);
+      expect(isProperGuess).toBe(true);
       expect(guessNumber).toBe(1);
 
       expect(guessResult.map((r) => r.letter).join('')).toBe('apple');
