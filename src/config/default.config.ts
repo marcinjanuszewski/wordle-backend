@@ -8,7 +8,6 @@ export interface AuthConfig {
   jwtSecret: string;
   issuer: string;
   jwtExpirationInMinutes: number;
-  rtExpirationInMinutes: number;
 }
 
 export interface AppConfig {
@@ -38,10 +37,6 @@ export default (): AppConfig => ({
     jwtExpirationInMinutes: getIntOrDefault(
       env.AUTH_JWT_EXPIRATION_IN_MINUTES,
       10,
-    ),
-    rtExpirationInMinutes: getIntOrDefault(
-      env.AUTH_RT_EXPIRATION_IN_MINUTES,
-      7 * 60 * 24,
     ),
   },
 });

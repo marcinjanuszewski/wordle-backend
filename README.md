@@ -1,4 +1,4 @@
-<p align="center"# Task: Building a Wordle Game API
+<p align="center"# Wordle Game API
 
 ## Description:
 Your task is to develop an API for the popular word-guessing game called Wordle. The API should allow users to start a new game and submit word guesses. The objective is to build an API that can be used as the backend for a Wordle game application.
@@ -14,6 +14,7 @@ Implement the following endpoints:
 5. Include appropriate tests for your API using a testing framework of your choice (e.g., Jest, Mocha).
 
 ## Additional Guidelines:
+
 
 - Focus on writing clean, modular, and maintainable code.
 - Follow RESTful best practices and naming conventions.
@@ -36,6 +37,22 @@ We will assess your solution based on the following criteria:
 ```bash
 $ npm install
 ```
+
+## Configuration
+
+Available env variables:
+- `NODE_ENV` - node env, ex. 'development', 'production' or 'testing'
+- `APP_PORT` - app port, default is 3000
+- `POSTGRES_HOST` - database host
+- `POSTGRES_PORT` - database post
+- `POSTGRES_USER` - database post
+- `POSTGRES_PASSWORD` - database user's password
+- `POSTGRES_DATABASE` - database name
+
+- `AUTH_JWT_SECRET` - secret to generate JWT
+- `AUTH_ISSUER` - issuer that will be available in 
+- `AUTH_JWT_EXPIRATION_IN_MINUTES` - jwt expiration time in minutes (default 10)
+
 
 ## Running the app
 
