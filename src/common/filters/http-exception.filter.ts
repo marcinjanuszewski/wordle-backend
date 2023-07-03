@@ -6,7 +6,8 @@ import {
   Logger,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
-import { v4 as uuidv4 } from 'uuid';
+
+import { Id } from '../util/id.util';
 
 const ERROR_ID_HEADER = 'error-id';
 
@@ -20,7 +21,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const response = ctx.getResponse<Response>();
     const status = exception.getStatus();
 
-    const errorId = uuidv4();
+    const errorId = Id();
     const exceptionResponse = exception.getResponse();
 
     HttpExceptionFilter.logger.error(

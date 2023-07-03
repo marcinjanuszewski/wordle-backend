@@ -1,6 +1,7 @@
 import { ExceptionFilter, Catch, ArgumentsHost, Logger } from '@nestjs/common';
 import { Response } from 'express';
-import { v4 as uuidv4 } from 'uuid';
+
+import { Id } from '../util/id.util';
 
 const ERROR_ID_HEADER = 'error-id';
 
@@ -11,7 +12,7 @@ export class AllExceptionFilter implements ExceptionFilter {
   catch(exception: Error, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
-    const errorId = uuidv4();
+    const errorId = Id();
 
     AllExceptionFilter.logger.error(
       `Exception occurred. ErrorId: ${errorId}. Message: ${exception.message}`,
