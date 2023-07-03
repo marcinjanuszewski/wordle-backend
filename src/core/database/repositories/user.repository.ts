@@ -17,10 +17,10 @@ export default class UserRepository
     super(UserEntity, manager);
   }
 
-  getById(id: string): Promise<UserEntity> {
+  getById(id: string): Promise<UserEntity | null> {
     return this.findOneBy({ id: id! });
   }
-  getByEmail(email: string): Promise<UserEntity> {
+  getByEmail(email: string): Promise<UserEntity | null> {
     return this.findOneBy({ email: email! });
   }
 }
